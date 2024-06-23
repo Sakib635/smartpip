@@ -10,7 +10,8 @@ import base64
 import codecs
 import distutils.util
 import hashlib
-import imp
+import importlib.machinery
+#import imp
 import logging
 import os
 import posixpath
@@ -273,7 +274,7 @@ def compatible_tags():
         versions.append(''.join([major, str(minor)]))
 
     abis = []
-    for suffix, _, _ in imp.get_suffixes():
+    for suffix in importlib.machinery.EXTENSION_SUFFIXES + importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES:
         if suffix.startswith('.abi'):
             abis.append(suffix.split('.', 2)[1])
     abis.sort()
